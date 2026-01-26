@@ -74,50 +74,46 @@ print(f"Risk-Adjusted Yield: {decomp.ray}")
 
 ---
 
-## 2. BTC Regime-Switching Volatility Model
+## 2. Regime-Switching Model Template
 
 **File:** `regime_model.py`
 
-A 7-layer regime detection model for BTC position sizing, combining trend filtering, volatility regimes, and skewness signals.
+A template demonstrating regime-based position sizing methodology. Shows architecture and approach for combining trend, volatility, and higher-moment signals.
 
-### Model Architecture
+### Architecture Overview
 
-| Layer | Component | Function |
-|-------|-----------|----------|
-| 1 | Trend Filter | EMA(50) ratio for trend direction |
-| 2 | Regime Detection | Bull (1.15x) / Range (0.85x) / Bear (0.55x) |
-| 3-4 | Volatility Factors | Short-term (14d) vs expanding long-term vol |
-| 5 | Skew Adjustment | Short-term minus long-term skewness |
-| 6 | Composite Factor | Log-linear combination of vol + skew |
-| 7 | Position Sizing | Regime base × vol adjustment, clipped |
+| Layer | Component | Purpose |
+|-------|-----------|---------|
+| 1 | Trend Filter | EMA ratio for trend direction |
+| 2 | Regime Classification | Bull / Range / Bear states |
+| 3 | Volatility Factor | Short vs long-term vol comparison |
+| 4 | Moment Signal | Distribution shape changes |
+| 5 | Position Sizing | Combined signal → position |
 
-### Primary Alpha Signal
+### Key Concepts Demonstrated
 
-**Skew Differential (short-term minus long-term skewness)**
-
-| Horizon | IC | t-stat |
-|---------|-----|--------|
-| 1-day | +0.14 | 6.4*** |
-| 21-day | **+0.27** | 12.1*** |
-
-### Validation
-
-Monte Carlo robustness (1,000 simulations):
-- P(Sharpe > 0.5) = **92.3%**
-- P(Sharpe > 1.0) = 46.7%
+- **Regime detection** using trend filters
+- **Volatility scaling** for risk management
+- **Higher moment signals** (skewness, kurtosis)
+- **Walk-forward backtesting** framework
+- **Information Coefficient (IC)** calculation
 
 ### Usage
 
 ```python
-from regime_model import run_regime_model, backtest_strategy
-import pandas as pd
+from regime_model import run_regime_model, RegimeConfig
 
-# prices = pd.Series of BTC daily closes
-results = run_regime_model(prices)
+# Configure (requires calibration for production)
+config = RegimeConfig(
+    ema_span=50,
+    vol_short_window=14,
+    # ... other parameters
+)
 
-# Backtest
-bt = backtest_strategy(prices, results['position'])
+results = run_regime_model(prices, config)
 ```
+
+**Note:** Parameters are placeholders. Production use requires walk-forward optimization and out-of-sample validation.
 
 ---
 
