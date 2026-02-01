@@ -1,7 +1,7 @@
 # Quantitative Risk & Trading Frameworks
 
 **Author:** Gregory J. Komansky
-**Background:** 25 years institutional finance (Citi, JPMorgan, ClearBridge) | Creator of APTO ($112B traded)
+**Background:** 25 years institutional finance (Citi, JPMorgan, ClearBridge) | Creator of APTO ($112B traded) | GlobalSmart BETA | Dynamic Options Overlay
 
 ---
 
@@ -220,3 +220,4 @@ SSRN: [Research](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6116826)
 ---
 
 *These frameworks represent independent research applying institutional-grade quantitative methods to digital asset risk and trading.*
+
